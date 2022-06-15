@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import { UsersModule } from 'src/users/users.module';
-import RefreshToken from './auth.module';
+import RefreshToken from './entities/refresh-token.entity';
 import { sign, verify } from 'jsonwebtoken';
 
 @Injectable()

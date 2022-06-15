@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { UsersModule } from './users.module';
+import { User } from './entities/user.entity';
 
 @Injectable()
 export class UsersService {
-  private users: UsersModule[] = [
+  private users: User[] = [
     {
       id: 0,
       name: 'Bob',
@@ -24,16 +24,16 @@ export class UsersService {
     },
   ];
 
-  findByEmail(email: string): Promise<UsersModule | undefined> {
-    const user = this.users.find((user: UsersModule) => user.email === email);
+  findByEmail(email: string): Promise<User | undefined> {
+    const user = this.users.find((user: User) => user.email === email);
     if (user) {
       return Promise.resolve(user);
     }
     return undefined;
   }
 
-  findOne(id: number): Promise<UsersModule | undefined> {
-    const user = this.users.find((user: UsersModule) => user.id === id);
+  findOne(id: number): Promise<User | undefined> {
+    const user = this.users.find((user: User) => user.id === id);
     if (user) {
       return Promise.resolve(user);
     }
