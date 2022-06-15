@@ -1,4 +1,5 @@
 import { sign } from 'jsonwebtoken';
+
 class RefreshToken {
   constructor(init?: Partial<RefreshToken>) {
     Object.assign(this, init);

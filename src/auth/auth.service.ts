@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { UsersService } from 'src/users/users.service';
-import { UsersModule } from 'src/users/users.module';
+import { UserService } from '../users/users.service';
+import { User } from '../users/entities/user.entity';
 import RefreshToken from './entities/refresh-token.entity';
 import { sign, verify } from 'jsonwebtoken';
 
@@ -8,14 +8,18 @@ import { sign, verify } from 'jsonwebtoken';
 export class AuthService {
   private refreshTokens: RefreshToken[] = [];
 
-  constructor(private readonly userService: UsersService) {}
+  constructor(private readonly userService: UserService) {}
 
   async refresh(refreshStr: string): Promise<string | undefined> {
     const refreshToken = await this.retrieveRefreshToken(refreshStr);
-    if (!refreshToken) return undefined;
+    if (!refreshToken) {
+      return undefined;
+    }
 
     const user = await this.userService.findOne(refreshToken.userId);
-    if (!user) return undefined;
+    if (!user) {
+      return undefined;
+    }
 
     const accessToken = {
       userId: refreshToken.userId,
@@ -33,9 +37,7 @@ export class AuthService {
         return undefined;
       }
       return Promise.resolve(
-        this.refreshTokens.find(
-          (token: RefreshToken) => token.id === decoded.id,
-        ),
+        this.refreshTokens.find((token) => token.id === decoded.id),
       );
     } catch (e) {
       return undefined;
@@ -51,16 +53,18 @@ export class AuthService {
     if (!user) {
       return undefined;
     }
+    // verify your user -- use argon2 for password hashing!!
     if (user.password !== password) {
       return undefined;
     }
+
     return this.newRefreshAndAccessToken(user, values);
   }
 
   private async newRefreshAndAccessToken(
-    user: UsersModule,
+    user: User,
     values: { userAgent: string; ipAddress: string },
-  ): Promise<{ accessToken: any; refreshToken: string } | undefined> {
+  ): Promise<{ accessToken: string; refreshToken: string }> {
     const refreshObject = new RefreshToken({
       id:
         this.refreshTokens.length === 0
@@ -70,6 +74,7 @@ export class AuthService {
       userId: user.id,
     });
     this.refreshTokens.push(refreshObject);
+
     return {
       refreshToken: refreshObject.sign(),
       accessToken: sign(
@@ -87,10 +92,12 @@ export class AuthService {
   async logout(refreshStr): Promise<void> {
     const refreshToken = await this.retrieveRefreshToken(refreshStr);
 
-    if (!refreshToken) return;
-
+    if (!refreshToken) {
+      return;
+    }
+    // delete refreshtoken from db
     this.refreshTokens = this.refreshTokens.filter(
-      (refreshToken: RefreshToken) => refreshToken.id !== refreshToken.id,
+      (refreshToken) => refreshToken.id !== refreshToken.id,
     );
   }
 }

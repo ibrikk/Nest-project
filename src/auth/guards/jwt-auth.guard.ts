@@ -8,6 +8,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     if (info instanceof JsonWebTokenError) {
       throw new UnauthorizedException('Invalid JWT');
     }
+
     return super.handleRequest(err, user, info, context, status);
   }
 }
