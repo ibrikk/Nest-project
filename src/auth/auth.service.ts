@@ -1,3 +1,4 @@
+require('dotenv').config();
 import { Injectable } from '@nestjs/common';
 import { UserService } from '../users/users.service';
 import { User } from '../users/entities/user.entity';
@@ -25,7 +26,9 @@ export class AuthService {
       userId: refreshToken.userId,
     };
 
-    return sign(accessToken, process.env.ACCESS_SECRET, { expiresIn: '1h' });
+    return sign(accessToken, `${process.env.ACCESS_SECRET}`, {
+      expiresIn: '1h',
+    });
   }
 
   private retrieveRefreshToken(
@@ -81,7 +84,7 @@ export class AuthService {
         {
           userId: user.id,
         },
-        process.env.ACCESS_SECRET,
+        `${process.env.ACCESS_SECRET}`,
         {
           expiresIn: '1h',
         },
