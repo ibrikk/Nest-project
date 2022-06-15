@@ -1,9 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import { UsersModule } from 'src/users/users.module';
-import { RefreshToken } from './auth.module';
+import RefreshToken from './auth.module';
 import { sign, verify } from 'jsonwebtoken';
-import { access } from 'fs';
 
 @Injectable()
 export class AuthService {

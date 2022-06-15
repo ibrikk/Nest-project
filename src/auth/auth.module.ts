@@ -3,16 +3,18 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { sign } from 'jsonwebtoken';
 import { UsersModule } from 'src/users/users.module';
+import { JwtStrategy } from './strategies/jwt.strategy';
 
 @Module({
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [AuthService, JwtStrategy],
   imports: [UsersModule],
 })
-export class RefreshToken {
+class RefreshToken {
   constructor(init?: Partial<RefreshToken>) {
     Object.assign(this, init);
   }
+
   id: number;
   userId: number;
   userAgent: string;
@@ -22,3 +24,5 @@ export class RefreshToken {
     return sign({ ...this }, process.env.REFRESH_SECRET);
   }
 }
+
+export default RefreshToken;

@@ -1,5 +1,4 @@
 import { Body, Controller, Delete, Ip, Post, Req } from '@nestjs/common';
-import { RefreshToken } from './auth.module';
 import { AuthService } from './auth.service';
 import LoginDto from './dto/login.dto';
 import RefreshTokenDto from './dto/refresh-token.dto';
