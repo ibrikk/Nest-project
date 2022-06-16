@@ -1,4 +1,3 @@
-require('dotenv').config();
 import { Injectable } from '@nestjs/common';
 import { UserService } from '../users/users.service';
 import { User } from '../users/entities/user.entity';
@@ -35,7 +34,7 @@ export class AuthService {
     refreshStr: string,
   ): Promise<RefreshToken | undefined> {
     try {
-      const decoded = verify(refreshStr, process.env.REFRESH_SECRET);
+      const decoded = verify(refreshStr, `${process.env.REFRESH_SECRET}`);
       if (typeof decoded === 'string') {
         return undefined;
       }
