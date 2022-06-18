@@ -32,15 +32,6 @@ export class ProductsService {
         }
       }
     }
-    for (const obj of deepClone) {
-      for (const id of arr) {
-        if (obj.id === id) {
-          result.push(obj);
-          const index = deepClone.indexOf(obj);
-          deepClone.splice(index, 1);
-        }
-      }
-    }
     this.streamerService.writeDeletedRecords(result);
     return this.streamerService.createFile(deepClone);
   }
