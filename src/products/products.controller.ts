@@ -9,4 +9,9 @@ export class ProductsController {
   deleteProducts(@Body() body): Promise<void> {
     return this.productsService.deleteProduct(body.data);
   }
+
+  @Get('products')
+  getProducts() {
+    return this.productsService.constructFromJson();
+  }
 }
