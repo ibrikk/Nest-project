@@ -4,5 +4,11 @@ import { IsNotEmpty } from 'class-validator';
 export class FileDto {
   @IsNotEmpty()
   @ApiProperty()
-  data: string;
+  id: string;
+  title: string;
+  vendorName: string;
+  quantity: number;
+  price: number;
+  deliveryDate: Date;
+  expiryDate: Date;
 }

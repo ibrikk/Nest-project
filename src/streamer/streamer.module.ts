@@ -5,6 +5,6 @@ import { StreamerController } from './streamer.controller';
 @Module({
   controllers: [StreamerController],
   providers: [StreamerService, StreamerController],
-  exports: [StreamerService, StreamerController],
+  exports: [StreamerModule],
 })
 export class StreamerModule {}
