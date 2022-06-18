@@ -95,6 +95,7 @@ export class ProductsService {
   async deleteProduct(arr: string[]): Promise<void> {
     const constructedJson = await this.constructFromJson();
     const deepClone = JSON.parse(JSON.stringify(constructedJson));
+    console.log(deepClone);
     const result = [];
     for (let i = 0; i < deepClone.length; i++) {
       for (const id of arr) {

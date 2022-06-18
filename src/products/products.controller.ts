@@ -5,7 +5,7 @@ import { ProductsService } from './products.service';
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
-  @Post('delete')
+  @Put('delete')
   deleteProducts(@Body() body): Promise<void> {
     return this.productsService.deleteProduct(body.data);
   }
