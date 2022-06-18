@@ -20,6 +20,20 @@ export class ProductsService {
     return newProductService;
   }
 
+  async readProducts(arr): Promise<ProductsService[]> {
+    const constructedJson = await this.constructFromJson();
+    const deepClone = JSON.parse(JSON.stringify(constructedJson));
+    const result = [];
+    for (let i = 0; i < deepClone.length; i++) {
+      for (const id of arr) {
+        if (deepClone[i].id === id) {
+          result.push(deepClone[i]);
+        }
+      }
+    }
+    return result;
+  }
+
   async deleteProduct(arr: string[]): Promise<void> {
     const constructedJson = await this.constructFromJson();
     const deepClone = JSON.parse(JSON.stringify(constructedJson));

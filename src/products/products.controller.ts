@@ -10,8 +10,13 @@ export class ProductsController {
     return this.productsService.deleteProduct(body.data);
   }
 
-  @Get('products')
+  @Get('allProducts') // Returns in memory parsed JSON object
   getProducts() {
     return this.productsService.constructFromJson();
+  }
+
+  @Post('readProducts')
+  readProducts(@Body() body): Promise<ProductsService[]> {
+    return this.productsService.readProducts(body.data);
   }
 }
