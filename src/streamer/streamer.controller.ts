@@ -17,15 +17,6 @@ export class StreamerController {
 
   @Post('write')
   createFile(@Body() body: FileDto) {
-    return this.streamerService.createFile(body.data);
+    return this.streamerService.createFile(body);
   }
-
-  // @Get('byId')
-  // getFileById(@Response() res): Promise<void> {
-  //   res.set({
-  //     'Content-Type': 'application/json',
-  //     'Content-Disposition': 'attachment; filename="test.json"',
-  //   });
-  //   return this.streamerService.getFileById();
-  // }
 }

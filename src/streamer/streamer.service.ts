@@ -11,7 +11,8 @@ export class StreamerService {
   }
 
   async getFile() {
-    return await readFile(this.path, 'utf8');
+    const file = await readFile(this.path, 'utf8');
+    return JSON.parse(file);
 
     // const file = await createReadStream(join(process.cwd(), this.path));
     // return new StreamableFile(file);
@@ -21,24 +22,12 @@ export class StreamerService {
     if (!this.checkIfFileOrDirectoryExists()) {
       mkdirSync(this.path);
     }
-
-    const file = await writeFile(this.path, data, 'utf8', (err) =>
-      console.error(err),
-    );
-
-    return file;
+    const strigifiedData = JSON.stringify(data);
+    const result = await writeFile(this.path, strigifiedData, 'utf8', (err) => {
+      if (err) {
+        console.error('We have an error: ', err);
+      }
+    });
+    return result;
   }
-
-  //   async getFileById(ids: string[]) {
-  //     const fullFile = await createReadStream(
-  //       join(process.cwd(), '../../test.json'),
-  //     );
-  //     let file = [];
-  //     // const parsedFullFile = JSON.parse(fullFile);
-  //     for (const id of ids) {
-  //       fullFile.filter((obj) => obj.id === id);
-  //       file.push(obj);
-  //     }
-  //     return fullFile;
-  //   }
 }
