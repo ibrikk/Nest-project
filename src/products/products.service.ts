@@ -38,7 +38,16 @@ export class ProductsService {
     const constructedJson = await this.constructFromJson();
     const deepClone = JSON.parse(JSON.stringify(constructedJson));
     for (const obj of arr) {
-      if (!deepClone.includes(obj)) {
+      const index = deepClone.indexOf(obj);
+      if (index !== -1) {
+        deepClone[index].id = obj.id;
+        deepClone[index].title = obj.title;
+        deepClone[index].vendorName = obj.vendorName;
+        deepClone[index].quantity = obj.quantity;
+        deepClone[index].price = obj.price;
+        deepClone[index].deliveryDate = obj.deliveryDate;
+        deepClone[index].expiryDate = obj.expiryDate;
+      } else {
         deepClone.push(obj);
       }
     }
