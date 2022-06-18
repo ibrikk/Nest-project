@@ -1,10 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
 
-class RefreshTokenDto {
+export class FileDto {
   @IsNotEmpty()
   @ApiProperty()
-  refreshToken: string;
+  data: string;
 }
-
-export default RefreshTokenDto;
