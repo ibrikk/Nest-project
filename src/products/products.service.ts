@@ -32,7 +32,9 @@ export class ProductsService {
         }
       }
     }
-    this.streamerService.writeDeletedRecords(result);
+    const oldDeletedRecords = await this.streamerService.getDeletedRecords();
+    const newRecords = [...oldDeletedRecords, result];
+    this.streamerService.writeDeletedRecords(newRecords);
     return this.streamerService.createFile(deepClone);
   }
 }

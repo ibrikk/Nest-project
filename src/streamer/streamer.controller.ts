@@ -19,4 +19,9 @@ export class StreamerController {
   createFile(@Body() body: FileDto) {
     return this.streamerService.createFile(body);
   }
+
+  @Get('getDeleted') // We won't need this route
+  async getDeletedProducts(): Promise<StreamerService[]> {
+    return this.streamerService.getDeletedRecords();
+  }
 }
