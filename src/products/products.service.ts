@@ -23,14 +23,17 @@ export class ProductsService {
   async deleteProduct(arr: string[]): Promise<void> {
     const constructedJson = await this.constructFromJson();
     const deepClone = JSON.parse(JSON.stringify(constructedJson));
-    let result = [];
+    const result = [];
     for (const obj of deepClone) {
       for (const id of arr) {
         if (obj.id === id) {
           result.push(obj);
+          const index = deepClone.indexOf(obj);
+          deepClone.splice(index, 1);
         }
       }
     }
-    return this.streamerService.writeDeletedRecords(result);
+    this.streamerService.writeDeletedRecords(result);
+    return this.streamerService.createFile(deepClone);
   }
 }
