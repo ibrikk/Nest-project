@@ -20,6 +20,12 @@ export class ProductsService {
     return newProductService;
   }
 
+  async constructDeletedFromJson(): Promise<ProductsService> {
+    const jsonData = await this.streamerService.getDeletedRecords();
+    const newProductService = plainToClass(ProductsService, jsonData);
+    return newProductService;
+  }
+
   async readProducts(arr): Promise<ProductsService[]> {
     const constructedJson = await this.constructFromJson();
     const deepClone = JSON.parse(JSON.stringify(constructedJson));
@@ -52,6 +58,38 @@ export class ProductsService {
       }
     }
     return this.streamerService.createFile(deepClone);
+  }
+
+  async restoreProduct(jsonObj: ProductsService): Promise<void> {
+    const constructDeletedFileJson = await this.constructDeletedFromJson();
+    const cloneConstructDeletedFileJson = JSON.parse(
+      JSON.stringify(constructDeletedFileJson),
+    );
+    console.log(cloneConstructDeletedFileJson);
+    console.log('jsonObject', jsonObj);
+    if (!cloneConstructDeletedFileJson.includes(jsonObj)) {
+      console.log('File does not exist in Deleted Files Record');
+      return;
+    }
+    const constructedJson = await this.constructFromJson();
+    const cloneConstructedJson = JSON.parse(JSON.stringify(constructedJson));
+
+    for (let i = 0; i < cloneConstructDeletedFileJson.length; i++) {
+      if (cloneConstructDeletedFileJson[i] === jsonObj) {
+        // deleted entry
+        if (cloneConstructedJson.includes(jsonObj)) {
+          console.log('File already exists in Active Files Record');
+          return;
+        } else {
+          cloneConstructedJson.push(jsonObj);
+          cloneConstructDeletedFileJson.slice(i, 1);
+        }
+      }
+    }
+    this.streamerService.createFile(cloneConstructedJson);
+    return this.streamerService.writeDeletedRecords(
+      cloneConstructDeletedFileJson,
+    );
   }
 
   async deleteProduct(arr: string[]): Promise<void> {

@@ -24,4 +24,9 @@ export class ProductsController {
   upsertProduct(@Body() body): Promise<void> {
     return this.productsService.upsertProducts(body.data);
   }
+
+  @Put('restore')
+  restoreProduct(@Body() body): Promise<void> {
+    return this.productsService.restoreProduct(body.data);
+  }
 }
