@@ -24,10 +24,10 @@ export class ProductsService {
     const constructedJson = await this.constructFromJson();
     const deepClone = JSON.parse(JSON.stringify(constructedJson));
     const result = [];
-    for (let i = 0; i < deepClone.length; i++) {
+    for (const obj of deepClone) {
       for (const id of arr) {
-        if (deepClone[i].id === id) {
-          result.push(deepClone[i]);
+        if (obj.id === id) {
+          result.push(obj);
         }
       }
     }
