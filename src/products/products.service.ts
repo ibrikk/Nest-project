@@ -34,6 +34,17 @@ export class ProductsService {
     return result;
   }
 
+  async upsertProducts(arr): Promise<void> {
+    const constructedJson = await this.constructFromJson();
+    const deepClone = JSON.parse(JSON.stringify(constructedJson));
+    for (const obj of arr) {
+      if (!deepClone.includes(obj)) {
+        deepClone.push(obj);
+      }
+    }
+    return this.streamerService.createFile(deepClone);
+  }
+
   async deleteProduct(arr: string[]): Promise<void> {
     const constructedJson = await this.constructFromJson();
     const deepClone = JSON.parse(JSON.stringify(constructedJson));

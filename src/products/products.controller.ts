@@ -15,8 +15,13 @@ export class ProductsController {
     return this.productsService.constructFromJson();
   }
 
-  @Post('readProducts')
+  @Post('read')
   readProducts(@Body() body): Promise<ProductsService[]> {
     return this.productsService.readProducts(body.data);
+  }
+
+  @Put('upsert')
+  upsertProduct(@Body() body): Promise<void> {
+    return this.productsService.upsertProducts(body.data);
   }
 }
