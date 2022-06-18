@@ -4,7 +4,7 @@ import { plainToClass } from 'class-transformer';
 
 @Injectable()
 export class ProductsService {
-  productId: string;
+  id: string;
   title: string;
   vendorName: string;
   quantity: number;
@@ -26,7 +26,7 @@ export class ProductsService {
     let result = [];
     for (const obj of deepClone) {
       for (const id of arr) {
-        if (obj.productId === id) {
+        if (obj.id === id) {
           result.push(obj);
         }
       }
