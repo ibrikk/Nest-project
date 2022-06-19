@@ -11,6 +11,10 @@ export class StreamerService {
     return existsSync(this.path);
   }
 
+  async checkIfDeletedFileOrDirectoryExists(): Promise<boolean> {
+    return existsSync(this.deletedProductsPath);
+  }
+
   async getFile() {
     const file = await readFile(this.path, 'utf8');
     return JSON.parse(file);

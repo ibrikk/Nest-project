@@ -67,7 +67,7 @@ export class ProductsService {
     );
     console.log(cloneConstructDeletedFileJson);
     console.log('jsonObject', jsonObj);
-    if (!cloneConstructDeletedFileJson.includes(jsonObj)) {
+    if (!cloneConstructDeletedFileJson.some((el) => el.id === jsonObj.id)) {
       console.log('File does not exist in Deleted Files Record');
       return;
     }
@@ -75,14 +75,14 @@ export class ProductsService {
     const cloneConstructedJson = JSON.parse(JSON.stringify(constructedJson));
 
     for (let i = 0; i < cloneConstructDeletedFileJson.length; i++) {
-      if (cloneConstructDeletedFileJson[i] === jsonObj) {
+      if (cloneConstructDeletedFileJson[i].id === jsonObj.id) {
         // deleted entry
-        if (cloneConstructedJson.includes(jsonObj)) {
+        if (cloneConstructedJson.some((el) => el.id === jsonObj.id)) {
           console.log('File already exists in Active Files Record');
           return;
         } else {
           cloneConstructedJson.push(jsonObj);
-          cloneConstructDeletedFileJson.slice(i, 1);
+          cloneConstructDeletedFileJson.splice(i, 1);
         }
       }
     }
@@ -95,7 +95,6 @@ export class ProductsService {
   async deleteProduct(arr: string[]): Promise<void> {
     const constructedJson = await this.constructFromJson();
     const deepClone = JSON.parse(JSON.stringify(constructedJson));
-    console.log(deepClone);
     const result = [];
     for (let i = 0; i < deepClone.length; i++) {
       for (const id of arr) {
