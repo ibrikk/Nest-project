@@ -83,6 +83,24 @@ export class ProductsService {
     }
     return [];
   }
+  
+  async getProduct2(productIds: string[]): Promise<Models.Product[]> {
+    const db = await this.streamerService.getFile(
+      StreamerService.activeProductsDbPath,
+    );
+    if (db) {
+      let newProductIds = [];
+      for (const productId of productIds) {
+        for (const item of db.products) {
+          if (item.id === productId) {
+            newProductIds.push(item);
+          }
+        }
+      }
+      return newProductIds;
+    }
+    return [];
+  }
 
   async upsertProducts(
     productArray: Models.Product[],

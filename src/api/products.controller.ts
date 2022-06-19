@@ -20,6 +20,15 @@ export class ProductsController {
       return this.productsService.getProduct(productId);
     }
     
+    @UseGuards(JwtAuthGuard)
+    @Post()
+    getProducts2(@Body() body: string[]): Promise<Models.Product[]> {
+      if (body.length === 0 || body === undefined) {
+        return this.productsService.getAllActiveProducts();
+      }
+      return this.productsService.getProduct2(body);
+    }
+    
   @UseGuards(JwtAuthGuard)
   @Put()
   upsertProducts(@Body() body): Promise<Models.Product[]> {
