@@ -3,7 +3,7 @@ import { User } from './entities/user.entity';
 
 @Injectable()
 export class UserService {
-  private users: User[] = [
+  private usersDb: User[] = [
     {
       id: 0,
       name: 'Bob',
@@ -24,18 +24,24 @@ export class UserService {
       email: 'gary@gmail.com',
       password: 'garyPass',
     },
+    {
+      id: 3,
+      name: 'nijat', 
+      email: 'nijat@gmail.com',
+      password: 'nj'
+    }
   ];
 
-  findByEmail(email: string): Promise<User | undefined> {
-    const user = this.users.find((user) => user.email === email);
+  findByEmail(requestEmail: string): Promise<User | undefined> {
+    const user = this.usersDb.find((user) => user.email.toLowerCase() === requestEmail.toLowerCase());
     if (user) {
       return Promise.resolve(user);
     }
     return undefined;
   }
 
-  findOne(id: number): Promise<User | undefined> {
-    const user = this.users.find((user) => user.id === id);
+  findOne(userId: number): Promise<User | undefined> {
+    const user = this.usersDb.find((user) => user.id === userId);
     if (user) {
       return Promise.resolve(user);
     }
