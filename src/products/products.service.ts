@@ -71,7 +71,7 @@ export class ProductsService {
     return [];
   }
 
-  async getProduct(productId: string): Promise<Models.Product[]> {
+  async getProductById(productId: string): Promise<Models.Product[]> {
     const db = await this.streamerService.getFile(
       StreamerService.activeProductsDbPath,
     );
@@ -84,7 +84,7 @@ export class ProductsService {
     return [];
   }
   
-  async getProduct2(productIds: string[]): Promise<Models.Product[]> {
+  async getProduct(productIds: string[]): Promise<Models.Product[]> {
     const db = await this.streamerService.getFile(
       StreamerService.activeProductsDbPath,
     );

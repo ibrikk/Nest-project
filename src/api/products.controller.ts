@@ -13,20 +13,20 @@ export class ProductsController {
 
   @UseGuards(JwtAuthGuard)
     @Get()
-    getProducts(@Query('pid') productId: string) {
+    getProductsById(@Query('pid') productId: string) {
       if (productId === '' || productId === undefined) {
         return this.productsService.getAllActiveProducts();
       }
-      return this.productsService.getProduct(productId);
+      return this.productsService.getProductById(productId);
     }
     
     @UseGuards(JwtAuthGuard)
     @Post()
-    getProducts2(@Body() body: string[]): Promise<Models.Product[]> {
+    getProducts(@Body() body: string[]): Promise<Models.Product[]> {
       if (body.length === 0 || body === undefined) {
         return this.productsService.getAllActiveProducts();
       }
-      return this.productsService.getProduct2(body);
+      return this.productsService.getProduct(body);
     }
     
   @UseGuards(JwtAuthGuard)
