@@ -1,57 +1,70 @@
 import { Injectable } from '@nestjs/common';
-import { mkdirSync, existsSync, writeFile } from 'fs';
+import { mkdirSync, existsSync, writeFile, writeFileSync } from 'fs';
 import { readFile } from 'fs/promises';
+import * as Models from '../models';
 
 @Injectable()
 export class StreamerService {
-  private path = '../../test.json';
-  private deletedProductsPath = '../../deletedProducts.json';
+  static activeProductsDbPath = './data/active_products.json';
+  static deletedProductsDbPath = './data/deleted_products.json';
+  
+  
 
-  async checkIfFileOrDirectoryExists(): Promise<boolean> {
-    return existsSync(this.path);
+  async checkIfFileOrDirectoryExists(path: string): Promise<boolean> {
+    console.log(process.cwd());
+    return existsSync(path);
   }
 
-  async getFile() {
-    const file = await readFile(this.path, 'utf8');
-    return JSON.parse(file);
-
-    // const file = await createReadStream(join(process.cwd(), this.path));
-    // return new StreamableFile(file);
+  async getFile(path: string): Promise<Models.DbStructure> {
+    try {
+      const file = await readFile(path, 'utf8');
+      const parsedJson = JSON.parse(file);
+      const dbStructure = new Models.DbStructure(parsedJson);
+      if (dbStructure.products === undefined) return null;
+      return dbStructure;
+  
+    } catch (err) {
+      console.error(err);
+      return null;
+    };
   }
 
-  async createFile(data) {
-    if (!this.checkIfFileOrDirectoryExists()) {
-      mkdirSync(this.path);
+  writeFile(path: string, data: Models.DbStructure): boolean {
+    if (this.checkIfFileOrDirectoryExists(path)) {
+      return false;
+    } else {
+      mkdirSync(path);
     }
     const strigifiedData = JSON.stringify(data);
-    const result = await writeFile(this.path, strigifiedData, 'utf8', (err) => {
-      if (err) {
-        console.error('We have an error: ', err);
-      }
-    });
-    return result;
-  }
-
-  async writeDeletedRecords(data) {
-    if (!this.checkIfFileOrDirectoryExists()) {
-      mkdirSync(this.deletedProductsPath);
+    try {
+      writeFileSync(path, strigifiedData, 'utf8');
+    } catch(err) {
+      console.error('We have an error: ', err);
+      return false;
     }
-    const strigifiedData = JSON.stringify(data);
-    const result = await writeFile(
-      this.deletedProductsPath,
-      strigifiedData,
-      'utf8',
-      (err) => {
-        if (err) {
-          console.error('We have an error: ', err);
-        }
-      },
-    );
-    return result;
+    return true;
   }
 
-  async getDeletedRecords() {
-    const file = await readFile(this.deletedProductsPath, 'utf8');
-    return JSON.parse(file);
-  }
+  // async writeDeletedRecords(data) {
+  //   if (!this.checkIfFileOrDirectoryExists()) {
+  //     mkdirSync(this.deletedProductsPath);
+  //   }
+  //   const strigifiedData = JSON.stringify(data);
+  //   const result = await writeFile(
+  //     this.deletedProductsPath,
+  //     strigifiedData,
+  //     'utf8',
+  //     (err) => {
+  //       if (err) {
+  //         console.error('We have an error: ', err);
+  //       }
+  //     },
+  //   );
+  //   return result;
+  // }
+
+  // async getDeletedRecords() {
+  //   const file = await readFile(this.deletedProductsPath, 'utf8');
+  //   return JSON.parse(file);
+  // }
 }

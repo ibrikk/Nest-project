@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { User } from './entities/user.entity';
+import * as Models from '../models';
 
 @Injectable()
 export class UserService {
-  private usersDb: User[] = [
+  private usersDb: Models.User[] = [
     {
       id: 0,
       name: 'Bob',
@@ -32,7 +32,7 @@ export class UserService {
     }
   ];
 
-  findByEmail(requestEmail: string): Promise<User | undefined> {
+  findByEmail(requestEmail: string): Promise<Models.User | undefined> {
     const user = this.usersDb.find((user) => user.email.toLowerCase() === requestEmail.toLowerCase());
     if (user) {
       return Promise.resolve(user);
@@ -40,7 +40,7 @@ export class UserService {
     return undefined;
   }
 
-  findOne(userId: number): Promise<User | undefined> {
+  findOne(userId: number): Promise<Models.User | undefined> {
     const user = this.usersDb.find((user) => user.id === userId);
     if (user) {
       return Promise.resolve(user);

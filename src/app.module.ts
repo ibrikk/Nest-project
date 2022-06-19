@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
-import { UsersModule } from './users/users.module';
+import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { StreamerModule } from './streamer/streamer.module';
 import { ProductsModule } from './products/products.module';
+import { ApiModule } from './api/api.module';
 
 @Module({
-  imports: [UsersModule, AuthModule, ConfigModule.forRoot(), StreamerModule, ProductsModule],
+  imports: [UserModule, AuthModule, ConfigModule.forRoot(), StreamerModule, ProductsModule, ApiModule],
 })
 export class AppModule {}
