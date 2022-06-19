@@ -8,8 +8,11 @@ import * as Models from '../models';
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
   
+   // Returns in memory parsed JSON object
+   // localhost:3000/products?pid=33755a6e-0c33-4de2-8278-f7f7e25cdd74
+
   @UseGuards(JwtAuthGuard)
-    @Get() // Returns in memory parsed JSON object
+    @Get()
     getProducts(@Query('pid') productId: string) {
       if (productId === '' || productId === undefined) {
         return this.productsService.getAllActiveProducts();

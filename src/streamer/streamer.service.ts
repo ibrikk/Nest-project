@@ -37,39 +37,6 @@ export class StreamerService {
       console.error('We have an error: ', err);
       return false;
     }
-    // const result = await writeFile(
-    //   path,
-    //   strigifiedData,
-    //   'utf8',
-    //   (err) => {
-    //     if (err) {
-    //       console.error('We have an error: ', err);
-    //     }
-    //   },
-    // );
     return true;
   }
-
-  // async writeDeletedRecords(data) {
-  //   if (!this.checkIfFileOrDirectoryExists()) {
-  //     mkdirSync(this.deletedProductsPath);
-  //   }
-  //   const strigifiedData = JSON.stringify(data);
-  //   const result = await writeFile(
-  //     this.deletedProductsPath,
-  //     strigifiedData,
-  //     'utf8',
-  //     (err) => {
-  //       if (err) {
-  //         console.error('We have an error: ', err);
-  //       }
-  //     },
-  //   );
-  //   return result;
-  // }
-
-  // async getDeletedRecords() {
-  //   const file = await readFile(this.deletedProductsPath, 'utf8');
-  //   return JSON.parse(file);
-  // }
 }
