@@ -6,8 +6,9 @@ export class DbStructure {
     const productArray = json.products;
     if (productArray && productArray.length) {
       this.products = productArray.map(el => new Product(el))
-    } 
-    this.products = [];
+    } else {
+      this.products = [];
+    }
     this.lastModifiedDate = new Date(json.date);
   }
 

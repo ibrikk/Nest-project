@@ -8,10 +8,7 @@ export class StreamerService {
   static activeProductsDbPath = './data/active_products.json';
   static deletedProductsDbPath = './data/deleted_products.json';
   
-  
-
   async checkIfFileOrDirectoryExists(path: string): Promise<boolean> {
-    console.log(process.cwd());
     return existsSync(path);
   }
 
@@ -30,9 +27,7 @@ export class StreamerService {
   }
 
   writeFile(path: string, data: Models.DbStructure): boolean {
-    if (this.checkIfFileOrDirectoryExists(path)) {
-      return false;
-    } else {
+    if (!this.checkIfFileOrDirectoryExists(path)) {
       mkdirSync(path);
     }
     const strigifiedData = JSON.stringify(data);
@@ -42,6 +37,16 @@ export class StreamerService {
       console.error('We have an error: ', err);
       return false;
     }
+    // const result = await writeFile(
+    //   path,
+    //   strigifiedData,
+    //   'utf8',
+    //   (err) => {
+    //     if (err) {
+    //       console.error('We have an error: ', err);
+    //     }
+    //   },
+    // );
     return true;
   }
 

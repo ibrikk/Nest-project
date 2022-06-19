@@ -6,7 +6,7 @@ export class Product {
     this.vendorName = json.vendorName || null;
     this.quantity = json.quantity || null;
     this.price = json.price || null;
-    this.deliverDate = json.deliverDate || null;
+    this.deliveryDate = json.deliveryDate || null;
     this.expiryDate = json.expiryDate || null;
   }
   @ApiProperty()
@@ -15,6 +15,6 @@ export class Product {
   vendorName: string;
   quantity: number;
   price: number;
-  deliverDate: string;
+  deliveryDate: string;
   expiryDate: string;
 }
