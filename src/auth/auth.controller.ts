@@ -11,8 +11,8 @@ import {
 import { AuthService } from './auth.service';
 import RefreshTokenDto from './dto/refresh-token.dto';
 import { LoginDto } from './dto/login.dto';
-import { TokenExceptionFilter } from 'src/api/error-filters/token-exception.filter';
-import { UserExceptionFilter } from 'src/api/error-filters/user-exception-filter';
+import { TokenExceptionFilter } from '../api/error-filters/token-exception.filter';
+import { UserExceptionFilter } from '../api/error-filters/user-exception-filter';
 
 
 @Controller('auth')

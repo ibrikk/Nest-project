@@ -5,7 +5,7 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { UserService } from '../user/user.service';
 
 @Controller('user')
@@ -16,7 +16,7 @@ export class UserController {
   @Get()
   getUsers(@Req() request) {
     const userId = request.user.userId;
-    if (!userId || undefined) throw new NotFoundException('User Not Found');
+  if (userId === undefined) throw new NotFoundException('User Not Found');
     return this.userService.findOne(userId);
   }
 }

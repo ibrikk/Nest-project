@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { mkdirSync, existsSync, writeFile, writeFileSync } from 'fs';
+import { mkdirSync, existsSync, writeFileSync } from 'fs';
 import { readFile } from 'fs/promises';
 import * as Models from '../models';
 
