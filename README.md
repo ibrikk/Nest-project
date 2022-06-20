@@ -69,3 +69,9 @@ $ npm run test:cov
 3. Products
 4. Streaming - data handler service (using file services)
 5. API
+
+
+## Tests
+Run these commands from the root directory:
+1. User Controller -- jest src/user/user.controller.spec.ts -- notify --config=config.json
+2. 
