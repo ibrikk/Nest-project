@@ -15,7 +15,7 @@ export class ArrayExceptionFilter implements ExceptionFilter {
         statusCode: status,
         timestamp: new Date().toISOString(),
         path: request.url,
-        description: 'Wrong data type, please send an array instead'
+        description: 'Wrong data type, please send an array instead',
       });
   }
 }

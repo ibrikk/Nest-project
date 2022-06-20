@@ -8,10 +8,12 @@ import {
   UseGuards,
   Delete,
   BadRequestException,
+  UseFilters,
 } from '@nestjs/common';
 import { ProductsService } from '../products/products.service';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import * as Models from '../models';
+import { ArrayExceptionFilter } from './error-filters/array-exception.filter';
 
 @Controller('products')
 export class ProductsController {
@@ -29,12 +31,11 @@ export class ProductsController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @UseFilters(ArrayExceptionFilter)
   @Post()
   getProducts(@Body() body: string[]): Promise<Models.Product[]> {
     if (!Array.isArray(body)) {
-      throw new BadRequestException(
-        'Wrong data type, please send an array instead',
-      );
+      throw new BadRequestException();
     }
     if (body.length === 0) {
       return this.productsService.getAllActiveProducts();
@@ -46,9 +47,7 @@ export class ProductsController {
   @Put()
   upsertProducts(@Body() body): Promise<Models.Product[]> {
     if (!Array.isArray(body)) {
-      throw new BadRequestException(
-        'Wrong data type, please send an array instead',
-      );
+      throw new BadRequestException('Wrong data type, please send an array instead');
     }
     if (body.length === 0)
       throw new BadRequestException(
@@ -66,9 +65,7 @@ export class ProductsController {
   @Delete()
   deleteProductsById(@Body() body): Promise<void> {
     if (!Array.isArray(body)) {
-      throw new BadRequestException(
-        'Wrong data type, please send an array instead',
-      );
+      throw new BadRequestException();
     }
     if (body.length === 0) {
       throw new BadRequestException('Empty array! Please add products IDs');
@@ -80,9 +77,7 @@ export class ProductsController {
   @Put('restore')
   restoreProducts(@Body() body): Promise<Models.Product[]> {
     if (!Array.isArray(body)) {
-      throw new BadRequestException(
-        'Wrong data type, please send an array instead',
-      );
+      throw new BadRequestException();
     }
     if (body.length === 0)
       throw new BadRequestException(
