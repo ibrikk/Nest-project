@@ -26,24 +26,20 @@ export class AuthService {
     };
 
     return sign(accessToken, `${process.env.ACCESS_SECRET}`, {
-      expiresIn: '1h',
+      expiresIn: '120s',
     });
   }
 
-  private retrieveRefreshToken(
-    refreshStr: string,
-  ): Promise<RefreshToken | undefined> {
-    try {
-      const decoded = verify(refreshStr, `${process.env.REFRESH_SECRET}`);
-      if (typeof decoded === 'string') {
-        return undefined;
-      }
-      return Promise.resolve(
-        this.refreshTokens.find((token: RefreshToken) => token.id === decoded.id),
-      );
-    } catch (e) {
+  private retrieveRefreshToken(refreshStr: string): RefreshToken | undefined {
+    const decoded = verify(refreshStr, `${process.env.REFRESH_SECRET}`);
+    if (typeof decoded === 'string') {
       return undefined;
     }
+    const result = this.refreshTokens.find(
+      (token: RefreshToken) => token.id === decoded.dbRefreshToken.id,
+    );
+    return result; 
+  
   }
 
   async login(
@@ -76,28 +72,30 @@ export class AuthService {
     });
     this.refreshTokens.push(refreshObject);
     return {
-      refreshToken: refreshObject.sign(),
+      refreshToken: sign(
+        { dbRefreshToken: refreshObject },
+        `${process.env.REFRESH_SECRET}`,
+      ),
       accessToken: sign(
         {
           userId: user.id,
         },
         `${process.env.ACCESS_SECRET}`,
         {
-          expiresIn: '1h',
+          expiresIn: '120s',
         },
       ),
     };
   }
 
-  async logout(refreshStr: string): Promise<void | undefined> {
-    const refreshToken = await this.retrieveRefreshToken(refreshStr);
+  async logout(refreshStr: string): Promise<any | undefined> {
+    const requestedRefreshToken = await this.retrieveRefreshToken(refreshStr);
 
-    if (!refreshToken) {
+    if (!requestedRefreshToken) {
       return undefined;
     }
-    // delete refreshtoken from db
-    this.refreshTokens = this.refreshTokens.filter(
-      (refreshToken) => refreshToken.id !== refreshToken.id,
-    );
+    return (this.refreshTokens = this.refreshTokens.filter(
+      (refreshToken) => refreshToken.id !== requestedRefreshToken.id,
+    ));
   }
 }

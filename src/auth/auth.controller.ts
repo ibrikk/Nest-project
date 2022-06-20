@@ -40,6 +40,7 @@ export class AuthController {
     const hasBeenRetrieved = await this.authService.refresh(body.refreshToken);
     if (hasBeenRetrieved === undefined)
       throw new NotFoundException();
+    return hasBeenRetrieved;
   }
 
   @UseFilters(TokenExceptionFilter)

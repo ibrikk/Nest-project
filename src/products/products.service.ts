@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { StreamerService } from 'src/streamer/streamer.service';
-import { plainToClass } from 'class-transformer';
 import * as Models from '../models';
 
 @Injectable()
@@ -159,7 +158,7 @@ export class ProductsService {
     const activeDb = await this.streamerService.getFile(
       StreamerService.activeProductsDbPath,
     );
-    let productsToBeDeleted: Models.Product[] = []; // common ones that exist
+    let productsToBeDeleted: Models.Product[] = []; 
     if (activeDb) {
       for (const id of productIdsArray) {
         for (let i = 0; i < activeDb.products.length; i++) {
@@ -177,7 +176,6 @@ export class ProductsService {
     const deletedDb = await this.streamerService.getFile(
       StreamerService.deletedProductsDbPath,
     );
-    // const newResultDb = new Models.DbStructure(productsToBeDeleted);
 
     if (deletedDb) {
       for (const obj of productsToBeDeleted) {
@@ -188,7 +186,6 @@ export class ProductsService {
         }
       }
 
-      // push productsToBeDeleted into deletedDb
       const newDeletedDbProducts = [
         ...deletedDb.products,
         ...productsToBeDeleted,
@@ -196,9 +193,6 @@ export class ProductsService {
       const newDto = new Models.DbStructure();
       newDto.products = newDeletedDbProducts;
       newDto.lastModifiedDate = new Date();
-
-      console.log('resultDeletedDb', deletedDb);
-      const newDeletedDb = new Models.DbStructure(deletedDb);
 
       this.streamerService.writeFile(
         StreamerService.deletedProductsDbPath,

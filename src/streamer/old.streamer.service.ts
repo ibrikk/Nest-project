@@ -14,9 +14,6 @@ export class StreamerService {
   async getFile() {
     const file = await readFile(this.path, 'utf8');
     return JSON.parse(file);
-
-    // const file = await createReadStream(join(process.cwd(), this.path));
-    // return new StreamableFile(file);
   }
 
   async createFile(data) {
