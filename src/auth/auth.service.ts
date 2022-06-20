@@ -39,7 +39,7 @@ export class AuthService {
         return undefined;
       }
       return Promise.resolve(
-        this.refreshTokens.find((token) => token.id === decoded.id),
+        this.refreshTokens.find((token: RefreshToken) => token.id === decoded.id),
       );
     } catch (e) {
       return undefined;
@@ -75,7 +75,6 @@ export class AuthService {
       userId: user.id,
     });
     this.refreshTokens.push(refreshObject);
-
     return {
       refreshToken: refreshObject.sign(),
       accessToken: sign(
