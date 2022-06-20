@@ -90,11 +90,11 @@ export class AuthService {
     };
   }
 
-  async logout(refreshStr): Promise<void> {
+  async logout(refreshStr: string): Promise<void | undefined> {
     const refreshToken = await this.retrieveRefreshToken(refreshStr);
 
     if (!refreshToken) {
-      return;
+      return undefined;
     }
     // delete refreshtoken from db
     this.refreshTokens = this.refreshTokens.filter(
