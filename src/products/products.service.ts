@@ -154,4 +154,56 @@ export class ProductsService {
     }
     return;
   }
+
+  async deleteProductsById(productIdsArray: string[]
+    ): Promise<void> {
+    const activeDb = await this.streamerService.getFile(
+      StreamerService.activeProductsDbPath,
+    );
+    let productsToBeDeleted: Models.Product[] = []; // common ones that exist
+    if (activeDb) {
+      for (const id of productIdsArray) {
+        for (let i = 0; i < activeDb.products.length; i++) {
+            if (activeDb.products[i].id === id) {
+              productsToBeDeleted.push(activeDb.products[i]);
+              activeDb.products.splice(i, 1);
+            }
+          }
+        }
+      this.streamerService.writeFile(
+        StreamerService.activeProductsDbPath,
+        activeDb,
+      );
+    }
+    const deletedDb = await this.streamerService.getFile(
+      StreamerService.deletedProductsDbPath,
+    );
+    // const newResultDb = new Models.DbStructure(productsToBeDeleted);
+
+    if (deletedDb) {
+      for (const obj of productsToBeDeleted) {
+        for (let i = 0; i < activeDb.products.length; i++) {
+            if (activeDb.products[i].id === obj.id) {
+              productsToBeDeleted.splice(i, 1);
+            }
+          }
+        }
+
+        // push productsToBeDeleted into deletedDb
+        const newDeletedDbProducts = [...deletedDb.products, ...productsToBeDeleted];
+        const newDto = new Models.DbStructure();
+        newDto.products = newDeletedDbProducts;
+        newDto.lastModifiedDate = new Date();
+
+
+      console.log('resultDeletedDb', deletedDb);
+      const newDeletedDb = new Models.DbStructure(deletedDb);
+
+      this.streamerService.writeFile(
+        StreamerService.deletedProductsDbPath,
+        newDto,
+      );
+    }
+    return;
+  }
 }

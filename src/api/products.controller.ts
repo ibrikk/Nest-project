@@ -1,34 +1,43 @@
-import { Body, Controller, Get, Post, Put, Query, UseGuards, Delete, ForbiddenException } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Put,
+  Query,
+  UseGuards,
+  Delete,
+  ForbiddenException,
+} from '@nestjs/common';
 import { ProductsService } from '../products/products.service';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import * as Models from '../models';
 
-
 @Controller('products')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
-  
-   // Returns in memory parsed JSON object
-   // localhost:3000/products?pid=33755a6e-0c33-4de2-8278-f7f7e25cdd74
+
+  // Returns in memory parsed JSON object
+  // localhost:3000/products?pid=33755a6e-0c33-4de2-8278-f7f7e25cdd74
 
   @UseGuards(JwtAuthGuard)
-    @Get()
-    getProductsById(@Query('pid') productId: string) {
-      if (productId === '' || productId === undefined) {
-        return this.productsService.getAllActiveProducts();
-      }
-      return this.productsService.getProductById(productId);
+  @Get()
+  getProductsById(@Query('pid') productId: string) {
+    if (productId === '' || productId === undefined) {
+      return this.productsService.getAllActiveProducts();
     }
-    
-    @UseGuards(JwtAuthGuard)
-    @Post()
-    getProducts(@Body() body: string[]): Promise<Models.Product[]> {
-      if (body.length === 0 || body === undefined) {
-        return this.productsService.getAllActiveProducts();
-      }
-      return this.productsService.getProduct(body);
+    return this.productsService.getProductById(productId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post()
+  getProducts(@Body() body: string[]): Promise<Models.Product[]> {
+    if (body.length === 0 || body === undefined) {
+      return this.productsService.getAllActiveProducts();
     }
-    
+    return this.productsService.getProduct(body);
+  }
+
   @UseGuards(JwtAuthGuard)
   @Put()
   upsertProducts(@Body() body): Promise<Models.Product[]> {
@@ -39,18 +48,17 @@ export class ProductsController {
     throw new ForbiddenException();
   }
 
-@UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Delete()
-  deleteProducts(@Body() body): Promise<void> {
-    const productArray = this.productsService.processJsonArray(body);
-    if (productArray) {
-      return this.productsService.deleteProducts(productArray);
+  deleteProductsById(@Body() body): Promise<void> {
+    // const productArray = this.productsService.processJsonArray(body);
+    if (body.length === 0 || body === undefined) {  
+      throw new ForbiddenException();
     }
-    throw new ForbiddenException();
+    return this.productsService.deleteProductsById(body);
   }
 
-
-@UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Put('restore')
   restoreProducts(@Body() body): Promise<Models.Product[]> {
     const productArray = this.productsService.processJsonArray(body);
