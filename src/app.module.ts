@@ -7,6 +7,13 @@ import { ProductsModule } from './products/products.module';
 import { ApiModule } from './api/api.module';
 
 @Module({
-  imports: [UserModule, AuthModule, ConfigModule.forRoot(), StreamerModule, ProductsModule, ApiModule],
+  imports: [
+    UserModule,
+    AuthModule,
+    ConfigModule.forRoot(),
+    StreamerModule,
+    ProductsModule,
+    ApiModule,
+  ],
 })
 export class AppModule {}

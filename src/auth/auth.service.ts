@@ -38,8 +38,7 @@ export class AuthService {
     const result = this.refreshTokens.find(
       (token: RefreshToken) => token.id === decoded.dbRefreshToken.id,
     );
-    return result; 
-  
+    return result;
   }
 
   async login(

@@ -344,7 +344,5 @@ describe('ProductsController', () => {
         expectedOutput,
       );
     });
-
-    
   });
 });

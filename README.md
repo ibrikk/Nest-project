@@ -1,4 +1,3 @@
-
 ## Description
 
 ## Installation
@@ -34,7 +33,8 @@ $ npm run test:cov
 ```
 
 ## APIs
-1. Authentication Service: /auth 
+
+1. Authentication Service: /auth
    Authenticate User - (email, password) => accessToken, refreshToken;
    /login - POST
 
@@ -45,12 +45,13 @@ $ npm run test:cov
    /logout - DELETE
 
 2. User Service: /user
-   Get user (accessToken) => userPayload 
+   Get user (accessToken) => userPayload
    / - GET
 
 3. Products Service /products
    Get products () => Product[]
    /?pid - GET
+
    # If pid exists get that product else get all products
 
    Usert Products (Product[]) => Product[]
@@ -70,8 +71,9 @@ $ npm run test:cov
 4. Streaming - data handler service (using file services)
 5. API
 
-
 ## Tests
+
 Run these commands from the root directory:
+
 1. User Controller -- jest src/user/user.controller.spec.ts -- notify --config=config.json
-2. 
+2.

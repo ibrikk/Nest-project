@@ -14,7 +14,6 @@ import { LoginDto } from './dto/login.dto';
 import { TokenExceptionFilter } from '../api/error-filters/token-exception.filter';
 import { UserExceptionFilter } from '../api/error-filters/user-exception-filter';
 
-
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -38,8 +37,7 @@ export class AuthController {
   @Post('refresh')
   async refreshToken(@Body() body: RefreshTokenDto) {
     const hasBeenRetrieved = await this.authService.refresh(body.refreshToken);
-    if (hasBeenRetrieved === undefined)
-      throw new NotFoundException();
+    if (hasBeenRetrieved === undefined) throw new NotFoundException();
     return hasBeenRetrieved;
   }
 

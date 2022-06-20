@@ -158,7 +158,7 @@ export class ProductsService {
     const activeDb = await this.streamerService.getFile(
       StreamerService.activeProductsDbPath,
     );
-    let productsToBeDeleted: Models.Product[] = []; 
+    let productsToBeDeleted: Models.Product[] = [];
     if (activeDb) {
       for (const id of productIdsArray) {
         for (let i = 0; i < activeDb.products.length; i++) {

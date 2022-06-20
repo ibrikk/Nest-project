@@ -26,14 +26,16 @@ export class UserService {
     },
     {
       id: 3,
-      name: 'nijat', 
+      name: 'nijat',
       email: 'nijat@gmail.com',
-      password: 'nj'
-    }
+      password: 'nj',
+    },
   ];
 
   findByEmail(requestEmail: string): Promise<Models.User | undefined> {
-    const user = this.usersDb.find((user) => user.email.toLowerCase() === requestEmail.toLowerCase());
+    const user = this.usersDb.find(
+      (user) => user.email.toLowerCase() === requestEmail.toLowerCase(),
+    );
     if (user) {
       return Promise.resolve(user);
     }
