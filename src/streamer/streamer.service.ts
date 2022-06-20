@@ -15,6 +15,7 @@ export class StreamerService {
   async getFile(path: string): Promise<Models.DbStructure> {
     try {
       const file = await readFile(path, 'utf8');
+      
       const parsedJson = JSON.parse(file);
       const dbStructure = new Models.DbStructure(parsedJson);
       if (dbStructure.products === undefined) return null;

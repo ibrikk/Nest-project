@@ -83,7 +83,7 @@ export class ProductsService {
     }
     return [];
   }
-  
+
   async getProduct(productIds: string[]): Promise<Models.Product[]> {
     const db = await this.streamerService.getFile(
       StreamerService.activeProductsDbPath,
@@ -155,8 +155,7 @@ export class ProductsService {
     return;
   }
 
-  async deleteProductsById(productIdsArray: string[]
-    ): Promise<void> {
+  async deleteProductsById(productIdsArray: string[]): Promise<void> {
     const activeDb = await this.streamerService.getFile(
       StreamerService.activeProductsDbPath,
     );
@@ -164,12 +163,12 @@ export class ProductsService {
     if (activeDb) {
       for (const id of productIdsArray) {
         for (let i = 0; i < activeDb.products.length; i++) {
-            if (activeDb.products[i].id === id) {
-              productsToBeDeleted.push(activeDb.products[i]);
-              activeDb.products.splice(i, 1);
-            }
+          if (activeDb.products[i].id === id) {
+            productsToBeDeleted.push(activeDb.products[i]);
+            activeDb.products.splice(i, 1);
           }
         }
+      }
       this.streamerService.writeFile(
         StreamerService.activeProductsDbPath,
         activeDb,
@@ -183,18 +182,20 @@ export class ProductsService {
     if (deletedDb) {
       for (const obj of productsToBeDeleted) {
         for (let i = 0; i < activeDb.products.length; i++) {
-            if (activeDb.products[i].id === obj.id) {
-              productsToBeDeleted.splice(i, 1);
-            }
+          if (activeDb.products[i].id === obj.id) {
+            productsToBeDeleted.splice(i, 1);
           }
         }
+      }
 
-        // push productsToBeDeleted into deletedDb
-        const newDeletedDbProducts = [...deletedDb.products, ...productsToBeDeleted];
-        const newDto = new Models.DbStructure();
-        newDto.products = newDeletedDbProducts;
-        newDto.lastModifiedDate = new Date();
-
+      // push productsToBeDeleted into deletedDb
+      const newDeletedDbProducts = [
+        ...deletedDb.products,
+        ...productsToBeDeleted,
+      ];
+      const newDto = new Models.DbStructure();
+      newDto.products = newDeletedDbProducts;
+      newDto.lastModifiedDate = new Date();
 
       console.log('resultDeletedDb', deletedDb);
       const newDeletedDb = new Models.DbStructure(deletedDb);
