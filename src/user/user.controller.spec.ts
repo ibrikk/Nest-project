@@ -31,7 +31,7 @@ describe('UserController', () => {
         },
       };
       const login = await authService.login(mockUser.email, mockUser.password, mockUser.values);
-      const input: Object = {
+      const generatedAccessToken: Object = {
         user: {
           userId:
           login.accessToken
@@ -46,7 +46,7 @@ describe('UserController', () => {
       };
       jest.spyOn(userService, 'findOne').mockImplementation(() => output);
 
-      expect(await userController.getUsers(input)).toBe(output);
+      expect(await userController.getUsers(generatedAccessToken)).toBe(output);
     });
   });
 });
