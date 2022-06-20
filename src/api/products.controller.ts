@@ -10,23 +10,12 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { ProductsService } from '../products/products.service';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import * as Models from '../models';
 
 @Controller('products')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
-
-  // localhost:3000/products?pid=33755a6e-0c33-4de2-8278-f7f7e25cdd74
-
-  @UseGuards(JwtAuthGuard)
-  @Get()
-  getProductsById(@Query('pid') productId: string) {
-    if (productId === '' || productId === undefined) {
-      return this.productsService.getAllActiveProducts();
-    }
-    return this.productsService.getProductById(productId);
-  }
 
   @UseGuards(JwtAuthGuard)
   @Post()
@@ -78,7 +67,9 @@ export class ProductsController {
   @Put('restore')
   restoreProducts(@Body() body): Promise<Models.Product[]> {
     if (!Array.isArray(body)) {
-      throw new BadRequestException('Wrong data type, please send an array instead');
+      throw new BadRequestException(
+        'Wrong data type, please send an array instead',
+      );
     }
     if (body.length === 0)
       throw new BadRequestException(
@@ -90,5 +81,16 @@ export class ProductsController {
       return this.productsService.upsertProducts(productArray);
     }
     throw new BadRequestException('Failed to process to a Product Model');
+  }
+
+  // localhost:3000/products?pid=33755a6e-0c33-4de2-8278-f7f7e25cdd74
+
+  @UseGuards(JwtAuthGuard)
+  @Get()
+  getProductsById(@Query('pid') productId: string) {
+    if (productId === '' || productId === undefined) {
+      return this.productsService.getAllActiveProducts();
+    }
+    return this.productsService.getProductById(productId);
   }
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { StreamerService } from 'src/streamer/streamer.service';
+import { StreamerService } from '../streamer/streamer.service';
 import * as Models from '../models';
 
 @Injectable()
