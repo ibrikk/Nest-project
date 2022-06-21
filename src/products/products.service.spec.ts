@@ -7,7 +7,6 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 
 describe('ProductsService', () => {
   let productsService: ProductsService;
-  let streamerService: StreamerService;
 
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -21,7 +20,6 @@ describe('ProductsService', () => {
       ],
     }).compile();
     productsService = module.get<ProductsService>(ProductsService);
-    streamerService = module.get<StreamerService>(StreamerService);
   });
 
   it('Db should not be defined', async () => {
