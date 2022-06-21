@@ -13,6 +13,7 @@ $ yarn
 ```bash
 # development
 $ yarn start
+To check all available endpoints: http://localhost:3000/api
 
 ```
 
@@ -26,7 +27,7 @@ $ yarn global add jest
 
 ```bash
 # unit tests
-$ yarn test
+$ yarn test 
 ```
 
 ## APIs
