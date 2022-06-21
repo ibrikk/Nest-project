@@ -5,19 +5,34 @@ import * as Models from '../models';
 import { AuthService } from '../auth/auth.service';
 
 describe('UserController', () => {
-  let userService: UserService;
+  let spyUserService: UserService;
   let userController: UserController;
-  let authService: AuthService;
+  let spyAuthService: AuthService;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
+    const UserMockService = {
+      provide: UserService,
+      useFactory: () => ({
+        findByEmail: jest.fn(() => []),
+        findOne: jest.fn(() => []),
+      }),
+    };
+
+    const AuthMockService = {
+      provide: AuthService,
+      useFactory: () => ({
+        login: jest.fn(() => []),
+      }),
+    };
+
     const module: TestingModule = await Test.createTestingModule({
       controllers: [UserController],
-      providers: [UserService, AuthService],
+      providers: [UserService, AuthService, UserMockService, AuthMockService],
     }).compile();
 
-    userService = module.get<UserService>(UserService);
+    spyUserService = module.get<UserService>(UserService);
     userController = module.get<UserController>(UserController);
-    authService = module.get<AuthService>(AuthService);
+    spyAuthService = module.get<AuthService>(AuthService);
   });
 
   describe('UserController', () => {
@@ -30,7 +45,7 @@ describe('UserController', () => {
           ipAddress: '12',
         },
       };
-      const login = await authService.login(
+      const login = await spyAuthService.login(
         mockUser.email,
         mockUser.password,
         mockUser.values,
@@ -47,7 +62,7 @@ describe('UserController', () => {
         email: 'bob@gmail.com',
         password: 'bobPass',
       };
-      jest.spyOn(userService, 'findOne').mockImplementation(() => output);
+      jest.spyOn(spyUserService, 'findOne').mockImplementation(() => output);
 
       expect(await userController.getUsers(generatedAccessToken)).toBe(output);
     });
