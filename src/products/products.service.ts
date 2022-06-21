@@ -129,31 +129,6 @@ export class ProductsService {
     return [];
   }
 
-  async deleteProducts(productArray: Models.Product[]): Promise<void> {
-    const activeDb = await this.streamerService.getFile(
-      StreamerService.activeProductsDbPath,
-    );
-    if (activeDb) {
-      const newActiveDb = this.removeProductsFromDto(productArray, activeDb);
-      this.streamerService.writeFile(
-        StreamerService.activeProductsDbPath,
-        newActiveDb,
-      );
-    }
-    const deletedDb = await this.streamerService.getFile(
-      StreamerService.deletedProductsDbPath,
-    );
-
-    if (deletedDb) {
-      const newDeletedDb = this.upsertProductsToDto(productArray, deletedDb);
-      this.streamerService.writeFile(
-        StreamerService.deletedProductsDbPath,
-        newDeletedDb,
-      );
-    }
-    return;
-  }
-
   async deleteProductsById(productIdsArray: string[]): Promise<void> {
     const activeDb = await this.streamerService.getFile(
       StreamerService.activeProductsDbPath,
@@ -197,6 +172,31 @@ export class ProductsService {
       this.streamerService.writeFile(
         StreamerService.deletedProductsDbPath,
         newDto,
+      );
+    }
+    return;
+  }
+  /* ----------------------     OPTIONAL      ----------------------- */
+  async deleteProducts(productArray: Models.Product[]): Promise<void> {
+    const activeDb = await this.streamerService.getFile(
+      StreamerService.activeProductsDbPath,
+    );
+    if (activeDb) {
+      const newActiveDb = this.removeProductsFromDto(productArray, activeDb);
+      this.streamerService.writeFile(
+        StreamerService.activeProductsDbPath,
+        newActiveDb,
+      );
+    }
+    const deletedDb = await this.streamerService.getFile(
+      StreamerService.deletedProductsDbPath,
+    );
+
+    if (deletedDb) {
+      const newDeletedDb = this.upsertProductsToDto(productArray, deletedDb);
+      this.streamerService.writeFile(
+        StreamerService.deletedProductsDbPath,
+        newDeletedDb,
       );
     }
     return;
