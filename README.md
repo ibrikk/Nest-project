@@ -31,39 +31,49 @@ $ yarn test
 
 ## APIs
 
-1. Authentication Service: /auth
-   Authenticate User - (email, password) => accessToken, refreshToken;
-   /login - POST
+1. Authentication Service: /auth  
 
-   Refresh (refreshToken) => accessToken;
+  * Authenticate User - (email, password) => accessToken, refreshToken;  
+  
+   /login - POST    
+
+  * Refresh (refreshToken) => accessToken;
+   
    /refresh - POST
 
-   Logout (refreshToken) => void;
+  * Logout (refreshToken) => void;
+   
    /logout - DELETE
+   #
+2. User Service: /user  
 
-2. User Service: /user
-   Get user (accessToken) => userPayload
+  * Get user (accessToken) => userPayload
+   
    / - GET
-
+   #
 3. Products Service: /products
-   Get products by ID (string[] | []) => Product[]
+  * Get products by ID (string[] | []) => Product[]
+   
    / - POST
 
-   Upsert Products (Product[]) => Product[]
+  * Upsert Products (Product[]) => Product[]
+   
    / - PUT
 
-   Delete Products by ID (string[]) => void
+  * Delete Products by ID (string[]) => void
+   
    / - DELETE
 
-   Restore Product (Product[]) => Product[]
+  * Restore Product (Product[]) => Product[]
+   
    /restore - PUT
 
-   Products Service /products
+  * Products Service /products
    Get products () => Product[]
    /?pid - GET
-
    # If pid exists get that product else get all products
-
+   
+   #
 ## Microservices
 
 1. Auth
