@@ -5,7 +5,7 @@ export class DbStructure {
     if (json === null || json === undefined) return this;
     const productArray = json.products;
     if (productArray && productArray.length) {
-      this.products = productArray.map(el => new Product(el))
+      this.products = productArray.map((el) => new Product(el));
     } else {
       this.products = [];
     }
@@ -14,5 +14,4 @@ export class DbStructure {
 
   products: Product[];
   lastModifiedDate: Date;
-  
 }

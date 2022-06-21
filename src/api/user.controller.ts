@@ -16,7 +16,7 @@ export class UserController {
   @Get()
   getUsers(@Req() request) {
     const userId = request.user.userId;
-  if (userId === undefined) throw new NotFoundException('User Not Found');
+    if (userId === undefined) throw new NotFoundException('User Not Found');
     return this.userService.findOne(userId);
   }
 }

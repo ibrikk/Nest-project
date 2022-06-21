@@ -109,7 +109,10 @@ describe('ProductsService', () => {
     expect(upsertProductsSpy).toBeDefined();
   });
   it('Getting all active products by array of Ids should return an array', async () => {
-    const deleteProductsByIdSpy = jest.spyOn(productsService, 'deleteProductsById');
+    const deleteProductsByIdSpy = jest.spyOn(
+      productsService,
+      'deleteProductsById',
+    );
     productsService.deleteProductsById(['wefwef-ggrgr-234']);
     expect(deleteProductsByIdSpy).toBeTruthy();
   });

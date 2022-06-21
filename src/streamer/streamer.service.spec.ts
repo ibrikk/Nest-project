@@ -40,7 +40,7 @@ describe('StreamerService', () => {
           expiryDate: '12/12/2024',
         },
       ],
-      lastModifiedDate: 52
+      lastModifiedDate: 52,
     };
     const path = './data/deleted_products.json';
     const writeFileSpy = jest.spyOn(streamerService, 'getFile');

@@ -11,7 +11,7 @@ export class ProductsService {
     dto: Models.DbStructure,
   ): Models.DbStructure {
     if (dto === undefined || dto.products === undefined) return;
-    let itemsToBeRemoved: Models.Product[] = [];
+    const itemsToBeRemoved: Models.Product[] = [];
     for (const item of products) {
       if (dto.products.findIndex((el) => el.id === item.id) > -1) {
         itemsToBeRemoved.push(item);
@@ -33,7 +33,7 @@ export class ProductsService {
     dto: Models.DbStructure,
   ): Models.DbStructure {
     if (dto === undefined || dto.products === undefined) return;
-    let itemsToBeAdded: Models.Product[] = [];
+    const itemsToBeAdded: Models.Product[] = [];
     for (const item of products) {
       const existingIndex = dto.products.findIndex((el) => el.id === item.id);
       if (existingIndex > -1) {
@@ -88,7 +88,7 @@ export class ProductsService {
       StreamerService.activeProductsDbPath,
     );
     if (db) {
-      let newProductIds = [];
+      const newProductIds = [];
       for (const productId of productIds) {
         for (const item of db.products) {
           if (item.id === productId) {
@@ -158,7 +158,7 @@ export class ProductsService {
     const activeDb = await this.streamerService.getFile(
       StreamerService.activeProductsDbPath,
     );
-    let productsToBeDeleted: Models.Product[] = [];
+    const productsToBeDeleted: Models.Product[] = [];
     if (activeDb) {
       for (const id of productIdsArray) {
         for (let i = 0; i < activeDb.products.length; i++) {
