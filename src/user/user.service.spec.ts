@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import * as sinon from 'sinon';
 import { UserService } from './user.service';
-import { Repository, FindOneOptions, FindManyOptions } from 'typeorm';
+import { Repository } from 'typeorm';
 import { getRepositoryToken } from '@nestjs/typeorm';
 
 describe('UserService', () => {
