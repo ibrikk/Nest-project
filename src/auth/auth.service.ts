@@ -10,6 +10,7 @@ export class AuthService {
 
   constructor(private readonly userService: UserService) {}
 
+  // Accepts a Refresh token and returnsw a a new AcessToken
   async refresh(refreshStr: string): Promise<string | undefined> {
     const refreshToken = await this.retrieveRefreshToken(refreshStr);
     if (!refreshToken) {
@@ -41,6 +42,8 @@ export class AuthService {
     return result;
   }
 
+  // Accepts an object of email and password values and returns
+  // a new AccessToken adn a RefreshToken
   async login(
     email: string,
     password: string,
@@ -87,6 +90,7 @@ export class AuthService {
     };
   }
 
+  // Accesspts RefreshToken as argument and removes it from the db
   async logout(refreshStr: string): Promise<any | undefined> {
     const requestedRefreshToken = await this.retrieveRefreshToken(refreshStr);
 
