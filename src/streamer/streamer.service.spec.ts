@@ -6,9 +6,7 @@ import { StreamerService } from './streamer.service';
 
 describe('StreamerService', () => {
   let streamerService: StreamerService;
-  let sandbox: sinon.SinonSandbox;
   beforeAll(async () => {
-    sandbox = sinon.createSandbox();
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         StreamerService,

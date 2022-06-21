@@ -6,10 +6,8 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 
 describe('UserService', () => {
   let userService: UserService;
-  let sandbox: sinon.SinonSandbox;
 
   beforeAll(async () => {
-    sandbox = sinon.createSandbox();
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         UserService,
