@@ -44,8 +44,6 @@ export class AuthController {
   @UseFilters(TokenExceptionFilter)
   @Delete('logout')
   async logout(@Body() body: RefreshTokenDto) {
-    const isLoggedOut = await this.authService.logout(body.refreshToken);
-    if (isLoggedOut === undefined) throw new NotFoundException();
-    return isLoggedOut;
+    return await this.authService.logout(body.refreshToken);
   }
 }
