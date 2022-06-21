@@ -1,14 +1,1 @@
-{
-  "products": [
-    {
-      "id": "thytry-rthyrty-tryrt",
-      "title": "Tomatos - Roma",
-      "vendorName": "Adeco",
-      "quantity": 50,
-      "price": 2,
-      "deliveryDate": "10/2/2022",
-      "expiryDate": "12/12/2024"
-    }
-  ],
-  "lastModifiedDate": null
-}
+{"products":[{"id":"thytry-rthyrty-tryrt","title":"Tomatos - Roma","vendorName":"Adeco","quantity":50,"price":2,"deliveryDate":"10/2/2022","expiryDate":"12/12/2024"}],"lastModifiedDate":52}

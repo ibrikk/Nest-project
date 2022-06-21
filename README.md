@@ -1,35 +1,32 @@
 ## Description
 
+Grociery Store API built with NestJs
+
 ## Installation
 
 ```bash
-$ npm install
+$ yarn
 ```
 
 ## Running the app
 
 ```bash
 # development
-$ npm run start
+$ yarn start
 
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
 ```
 
 ## Test
 
+Make sure to have Nest and Jest CLIs globally installed:
+
+```bash
+$ yarn global add jest
+```
+
 ```bash
 # unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+$ yarn test
 ```
 
 ## APIs
@@ -48,20 +45,24 @@ $ npm run test:cov
    Get user (accessToken) => userPayload
    / - GET
 
-3. Products Service /products
+3. Products Service: /products
+   Get products by ID (string[] | []) => Product[]
+   / - POST
+
+   Upsert Products (Product[]) => Product[]
+   / - PUT
+
+   Delete Products by ID (string[]) => void
+   / - DELETE
+
+   Restore Product (Product[]) => Product[]
+   /restore - PUT
+
+   Products Service /products
    Get products () => Product[]
    /?pid - GET
 
    # If pid exists get that product else get all products
-
-   Usert Products (Product[]) => Product[]
-   / - PUT
-
-   Delete Products (Product[]) => void
-   / - DELETE
-
-   Restore Product (Product) => Product
-   /restore - PUT
 
 ## Microservices
 
@@ -70,10 +71,3 @@ $ npm run test:cov
 3. Products
 4. Streaming - data handler service (using file services)
 5. API
-
-## Tests
-
-Run these commands from the root directory:
-
-1. User Controller -- jest src/user/user.controller.spec.ts -- notify --config=config.json
-2.

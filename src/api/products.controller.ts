@@ -83,8 +83,9 @@ export class ProductsController {
     throw new BadRequestException('Failed to process to a Product Model');
   }
 
-  // localhost:3000/products?pid=33755a6e-0c33-4de2-8278-f7f7e25cdd74
+  /* ------------------      OPTIONAL    ------------------------ */
 
+  // localhost:3000/products?pid=33755a6e-0c33-4de2-8278-f7f7e25cdd74
   @UseGuards(JwtAuthGuard)
   @Get()
   getProductsById(@Query('pid') productId: string) {
