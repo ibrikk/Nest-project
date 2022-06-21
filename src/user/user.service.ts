@@ -24,12 +24,6 @@ export class UserService {
       email: 'gary@gmail.com',
       password: 'garyPass',
     },
-    {
-      id: 3,
-      name: 'nijat',
-      email: 'nijat@gmail.com',
-      password: 'nj',
-    },
   ];
 
   findByEmail(requestEmail: string): Promise<Models.User | undefined> {
