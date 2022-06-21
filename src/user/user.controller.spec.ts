@@ -5,34 +5,19 @@ import * as Models from '../models';
 import { AuthService } from '../auth/auth.service';
 
 describe('UserController', () => {
-  let spyUserService: UserService;
+  let userService: UserService;
   let userController: UserController;
-  let spyAuthService: AuthService;
+  let authService: AuthService;
 
-  beforeAll(async () => {
-    const UserMockService = {
-      provide: UserService,
-      useFactory: () => ({
-        findByEmail: jest.fn(() => []),
-        findOne: jest.fn(() => []),
-      }),
-    };
-
-    const AuthMockService = {
-      provide: AuthService,
-      useFactory: () => ({
-        login: jest.fn(() => []),
-      }),
-    };
-
+  beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [UserController],
-      providers: [UserService, AuthService, UserMockService, AuthMockService],
+      providers: [UserService, AuthService],
     }).compile();
 
-    spyUserService = module.get<UserService>(UserService);
+    userService = module.get<UserService>(UserService);
     userController = module.get<UserController>(UserController);
-    spyAuthService = module.get<AuthService>(AuthService);
+    authService = module.get<AuthService>(AuthService);
   });
 
   describe('UserController', () => {
@@ -45,14 +30,11 @@ describe('UserController', () => {
           ipAddress: '12',
         },
       };
-      const login = await spyAuthService.login(
-        mockUser.email,
-        mockUser.password,
-        mockUser.values,
-      );
+      const login = await authService.login(mockUser.email, mockUser.password, mockUser.values);
       const generatedAccessToken: Object = {
         user: {
-          userId: login.accessToken,
+          userId:
+          login.accessToken
         },
       };
 
@@ -62,7 +44,7 @@ describe('UserController', () => {
         email: 'bob@gmail.com',
         password: 'bobPass',
       };
-      jest.spyOn(spyUserService, 'findOne').mockImplementation(() => output);
+      jest.spyOn(userService, 'findOne').mockImplementation(() => output);
 
       expect(await userController.getUsers(generatedAccessToken)).toBe(output);
     });
