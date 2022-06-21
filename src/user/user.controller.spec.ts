@@ -30,14 +30,11 @@ describe('UserController', () => {
           ipAddress: '12',
         },
       };
-      const login = await authService.login(
-        mockUser.email,
-        mockUser.password,
-        mockUser.values,
-      );
+      const login = await authService.login(mockUser.email, mockUser.password, mockUser.values);
       const generatedAccessToken: Object = {
         user: {
-          userId: login.accessToken,
+          userId:
+          login.accessToken
         },
       };
 
